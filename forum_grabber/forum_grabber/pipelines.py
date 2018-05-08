@@ -9,5 +9,5 @@
 class ForumGrabberPipeline(object):
 
     def process_item(self, item, spider):
-        print("\n\n\n\n")
+        print(item["name"])
         return item

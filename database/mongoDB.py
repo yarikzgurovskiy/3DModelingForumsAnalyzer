@@ -6,7 +6,7 @@ from database.topic import Topic
 
 
 class Database:
-    def __init__(self, to_clear=True, uri="mongodb://localhost:27017/"):
+    def __init__(self, to_clear=False, uri="mongodb://localhost:27017/"):
         self.__client = MongoClient(uri)
         self.__db = self.__client["admin"]
         self.__messages_coll = self.__db.messages
@@ -40,7 +40,7 @@ class Database:
         self.__topics_coll.remove()
 
 
-db = Database(False)
+db = Database(True)
 # db.save_topic(Topic("1", "11"))
 # db.save_topic(Topic("2", "11"))
 # db.save_topic(Topic("3", "11"))
