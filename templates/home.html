@@ -43,7 +43,7 @@
     {% endblock %}
     <ul class="list-group">
         {% for topic in topics %}
-            <a href="/{{ topic["_id"] }}" class="list-group-item">{{ topic["name"] }}</a>
+            <a href="/topics/{{ topic["_id"] }}" class="list-group-item">{{ topic["name"] }}</a>
         {% endfor %}
     </ul>
 
