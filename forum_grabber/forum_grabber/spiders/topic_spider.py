@@ -3,6 +3,7 @@ import scrapy
 
 class TopicSpider(scrapy.Spider):
     name = "topics"
+    start_urls = ["http://polycount.com/categories/general-discussion"]
 
     def parse(self, response):
         for topic in response.css("tr.Item"):
