@@ -12,8 +12,8 @@ def template_test():
 @app.route('/<code>')
 def template_test2(code):
     authors = [{"author": "Yarik", "messagesAmount": 1}, {"author": "Max", "messagesAmount": 6},
-               {"author": "Andrian", "messagesAmount": 4}, {"author": "Vadem", "messagesAmount": 8}]
-    return render_template('forum.html', authors=authors)
+               {"author": "Andrian", "messagesAmount": 300}, {"author": "Vadem", "messagesAmount": 8}]
+    return render_template('forum.html', authors=authors, maxAmount=300)
 
 
 if __name__ == '__main__':
