@@ -6,11 +6,13 @@ from database.topic import Topic
 
 
 class Database:
-    def __init__(self, uri="mongodb://localhost:27017/"):
+    def __init__(self, to_clear=True, uri="mongodb://localhost:27017/"):
         self.__client = MongoClient(uri)
         self.__db = self.__client["admin"]
         self.__messages_coll = self.__db.messages
         self.__topics_coll = self.__db.topics
+        if to_clear:
+            self.clear_database()
 
     def select_database(self, database: str):
         self.__db = self.__client[database]
@@ -28,13 +30,17 @@ class Database:
 
     def get_messages_counter_by_topic(self, topic_id: str) -> dict:
         messages = list(self.__messages_coll.find({"topic_id": ObjectId(topic_id)}))
-        dictionary = dict.fromkeys([message["author"] for message in messages], 0)
+        author_mess_amount = dict.fromkeys([message["author"] for message in messages], 0)
         for message in messages:
-            dictionary[message["author"]] += 1
-        return dictionary
+            author_mess_amount[message["author"]] += 1
+        return author_mess_amount
+
+    def clear_database(self):
+        self.__messages_coll.remove()
+        self.__topics_coll.remove()
 
 
-# db = Database()
+db = Database(False)
 # db.save_topic(Topic("1", "11"))
 # db.save_topic(Topic("2", "11"))
 # db.save_topic(Topic("3", "11"))
