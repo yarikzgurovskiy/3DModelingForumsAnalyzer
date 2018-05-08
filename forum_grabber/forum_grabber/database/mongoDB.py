@@ -40,16 +40,3 @@ class Database:
 
     def close(self):
         self.__client.close()
-
-#
-# db = Database()
-# db.save_message({"text": "2", "author": "2", "date": "3", "topic_url": "4"})
-# db.save_topic(Topic("1", "11"))
-# db.save_topic(Topic("2", "11"))
-# db.save_topic(Topic("3", "11"))
-# db.save_topic(Topic("4", "11"))
-# db.save_topic(Topic("5", "11"))
-# db.save_topic(Topic("6", "11"))
-# db.save_topic(Topic("7", "11"))
-# db.save_topic(Topic("8", "11"))
-# print(db.get_messages_counter_by_topic_url("http://polycount.com/discussion/200381/choosing-gift-for-3d-artist"))

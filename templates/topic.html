@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head>
+    {% block head %}
+        <title>{% block title %}{% endblock %} ForumsAnalyzer</title>
+    {% endblock %}
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet" media="screen">
+    <style type="text/css">
+        .container {
+            max-width: 700px;
+        }
+
+        h2 {
+            color: red;
+        }
+
+        .navbar-header {
+            float: left;
+            padding: 15px;
+            text-align: center;
+            width: 100%;
+        }
+
+        .navbar-brand {
+            float: none;
+        }
+    </style>
+    <!-- import plugin script -->
+    <script src='../static/Chart.min.js'></script>
+</head>
+<body>
+<nav class="navbar navbar-inverse" role="navigation">
+    <div class="navbar-header">
+        <a class="navbar-brand" href="/">3D Modeling Forums Analyzer</a>
+    </div>
+</nav>
+<div class="container">
+    <canvas id="chart" width="600" height="400"></canvas>
+    <table class="table table-bordered">
+        <thead>
+        <tr>
+            <th>Author</th>
+            <th>Messages amount</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for author, messages_amount in author_mess_amount.items() %}
+            <tr>
+                <td>{{ author }}</td>
+                <td>{{ messages_amount }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+<script>
+    // bar chart data
+    let barData = {
+        labels: [{% for author in author_mess_amount.keys() %}
+            "{{author}}",
+        {% endfor %}],
+        datasets: [
+            {
+                fillColor: "rgba(151,187,205,0.2)",
+                strokeColor: "rgba(151,187,205,1)",
+                pointColor: "rgba(151,187,205,1)",
+                data: [{% for messages_amount in author_mess_amount.values() %}
+                    {{messages_amount}},
+                {% endfor %}]
+            }
+        ]
+    };
+
+    // get bar chart canvas
+    let mychart = document.getElementById("chart").getContext("2d");
+
+    steps = 10;
+    max = {{ max_amount }}
+    // draw bar chart
+    new Chart(mychart).Bar(barData, {
+        scaleOverride: true,
+        scaleSteps: steps,
+        scaleStepWidth: Math.ceil(max / steps),
+        scaleStartValue: 0,
+        scaleShowVerticalLines: true,
+        scaleShowGridLines: true,
+        barShowStroke: true,
+        scaleShowLabels: true
+    });
+
+</script>
+<script src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
+<script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+</body>
+</html>
