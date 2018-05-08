@@ -24,7 +24,7 @@ class Database:
         self.__topics_coll.save(topic.__dict__)
 
     def get_topics(self) -> list:
-        return self.__topics_coll.find()
+        return list(self.__topics_coll.find())
 
     def get_messages_counter_by_topic(self, topic_id: str) -> dict:
         messages = list(self.__messages_coll.find({"topic_id": ObjectId(topic_id)}))
@@ -32,3 +32,15 @@ class Database:
         for message in messages:
             dictionary[message["author"]] += 1
         return dictionary
+
+
+# db = Database()
+# db.save_topic(Topic("1", "11"))
+# db.save_topic(Topic("2", "11"))
+# db.save_topic(Topic("3", "11"))
+# db.save_topic(Topic("4", "11"))
+# db.save_topic(Topic("5", "11"))
+# db.save_topic(Topic("6", "11"))
+# db.save_topic(Topic("7", "11"))
+# db.save_topic(Topic("8", "11"))
+# print(db.get_topics())
