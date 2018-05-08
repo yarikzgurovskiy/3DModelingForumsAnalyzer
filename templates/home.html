@@ -42,8 +42,8 @@
         <h1 class="centralized">{% block page %}{% endblock %} Themes</h1>
     {% endblock %}
     <ul class="list-group">
-        {% for n in themes %}
-            <a href="/123" class="list-group-item">{{ n["theme"] }}</a>
+        {% for topic in topics %}
+            <a href="/{{ topic["_id"] }}" class="list-group-item">{{ topic["name"] }}</a>
         {% endfor %}
     </ul>
 

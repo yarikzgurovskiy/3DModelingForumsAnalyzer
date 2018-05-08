@@ -45,10 +45,10 @@
         </tr>
         </thead>
         <tbody>
-        {% for item in authors %}
+        {% for author, messages_amount in author_mess_amount.items() %}
             <tr>
-                <td>{{ item["author"] }}</td>
-                <td>{{ item["messagesAmount"] }}</td>
+                <td>{{ author }}</td>
+                <td>{{ messages_amount }}</td>
             </tr>
         {% endfor %}
         </tbody>
@@ -57,16 +57,16 @@
 <script>
     // bar chart data
     let barData = {
-        labels: [{% for item in authors %}
-            "{{item["author"]}}",
+        labels: [{% for author in author_mess_amount.keys() %}
+            "{{author}}",
         {% endfor %}],
         datasets: [
             {
                 fillColor: "rgba(151,187,205,0.2)",
                 strokeColor: "rgba(151,187,205,1)",
                 pointColor: "rgba(151,187,205,1)",
-                data: [{% for item in authors %}
-                    {{item["messagesAmount"]}},
+                data: [{% for messages_amount in author_mess_amount.values() %}
+                    {{messages_amount}},
                 {% endfor %}]
             }
         ]
@@ -76,7 +76,7 @@
     let mychart = document.getElementById("chart").getContext("2d");
 
     steps = 10;
-    max = {{ maxAmount }}
+    max = {{ max_amount }}
     // draw bar chart
     new Chart(mychart).Bar(barData, {
         scaleOverride: true,

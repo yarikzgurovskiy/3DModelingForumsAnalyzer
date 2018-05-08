@@ -4,16 +4,20 @@ app = Flask(__name__)
 
 
 @app.route('/')
-def template_test():
+def home():
     return render_template('home.html',
-                           themes=[{"theme": "machine learning"}, {"theme": "kek"}, {"theme": "lol"}])
+                           topics=[{"name": "machine learning", "_id": "asd"},
+                                   {"name": "kek", "_id": "123"}, {"name": "lol", "_id": "qwerty"}])
 
 
-@app.route('/<code>')
-def template_test2(code):
-    authors = [{"author": "Yarik", "messagesAmount": 1}, {"author": "Max", "messagesAmount": 6},
-               {"author": "Andrian", "messagesAmount": 300}, {"author": "Vadem", "messagesAmount": 8}]
-    return render_template('forum.html', authors=authors, maxAmount=300)
+@app.route('/<id>')
+def forum(id):
+    author_mess_amount = {"Yarik": 1, "Max": 6, "Andrian": 5, "Vadem": 8}
+    max_amount = 0
+    for value in author_mess_amount.values():
+        if value > max_amount:
+            max_amount = value
+    return render_template('forum.html', author_mess_amount=author_mess_amount, max_amount=max_amount)
 
 
 if __name__ == '__main__':
