@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+    {% block head %}
+        <title>{% block title %}{% endblock %} - Flask Super Example</title>
+    {% endblock %}
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet" media="screen">
+    <style type="text/css">
+        .container {
+            max-width: 700px;
+        }
+
+        h2 {
+            color: red;
+        }
+
+        .navbar-header {
+            float: left;
+            padding: 15px;
+            text-align: center;
+            width: 100%;
+        }
+
+        .navbar-brand {
+            float: none;
+        }
+
+        .centralized {
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+<nav class="navbar navbar-inverse" role="navigation">
+    <div class="navbar-header">
+        <a class="navbar-brand" href="/">3D Modeling Forums Analyzer</a>
+    </div>
+</nav>
+<div class="container">
+    {% block heading %}
+        <h1 class="centralized">{% block page %}{% endblock %} Themes</h1>
+    {% endblock %}
+    <ul class="list-group">
+        {% for n in themes %}
+            <a href="/123" class="list-group-item">{{ n["theme"] }}</a>
+        {% endfor %}
+    </ul>
+
+</div>
+<script src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
+<script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+</body>
+</html>
