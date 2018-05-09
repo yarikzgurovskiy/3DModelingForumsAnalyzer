@@ -8,7 +8,7 @@
     <link href="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet" media="screen">
     <style type="text/css">
         .container {
-            max-width: 700px;
+            max-width: 1400px;
         }
 
         h2 {
@@ -25,6 +25,27 @@
         .navbar-brand {
             float: none;
         }
+
+        .centralized {
+            text-align: center;
+        }
+
+        .canvas {
+            width: 100%;
+            height: 400px;
+            text-align: center;
+        }
+
+        .tble {
+            margin: auto;
+            width: 50%;
+        }
+
+        .update {
+            position: absolute;
+            top: 7px;
+            right: 5px;
+        }
     </style>
     <!-- import plugin script -->
     <script src='../static/Chart.min.js'></script>
@@ -34,25 +55,34 @@
     <div class="navbar-header">
         <a class="navbar-brand" href="/">3D Modeling Forums Analyzer</a>
     </div>
+    <form method="post" class="update">
+        <button class="btn btn-default">Update data</button>
+    </form>
 </nav>
 <div class="container">
-    <canvas id="chart" width="600" height="400"></canvas>
-    <table class="table table-bordered">
-        <thead>
-        <tr>
-            <th>Author</th>
-            <th>Messages amount</th>
-        </tr>
-        </thead>
-        <tbody>
-        {% for author, messages_amount in author_mess_amount.items() %}
+    <canvas id="chart" class="canvas"></canvas>
+    <div class="centralized">
+        <a href="{{ topic_url }}" role="button" class="btn btn-default">Go to the original page</a>
+    </div>
+    <br/>
+    <div class="tble">
+        <table class="table table-bordered">
+            <thead>
             <tr>
-                <td>{{ author }}</td>
-                <td>{{ messages_amount }}</td>
+                <th>Author</th>
+                <th>Messages amount</th>
             </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+            {% for author, messages_amount in author_mess_amount.items() %}
+                <tr>
+                    <td>{{ author }}</td>
+                    <td>{{ messages_amount }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
 </div>
 <script>
     // bar chart data
@@ -75,8 +105,8 @@
     // get bar chart canvas
     let mychart = document.getElementById("chart").getContext("2d");
 
-    steps = 10;
-    max = {{ max_amount }}
+    steps = {{ max_amount }};
+    max = {{ max_amount }};
     // draw bar chart
     new Chart(mychart).Bar(barData, {
         scaleOverride: true,
