@@ -1,20 +1,31 @@
 import scrapy
 
+from ..database import Database
+from ..items import ForumMessageItem
+
 
 class MessageSpider(scrapy.Spider):
     name = "messages"
-    start_urls = [
-        'http://polycount.com/discussion/199203/shadow-of-the-tomb-raider',
-        'http://polycount.com/discussion/200381/choosing-gift-for-3d-artist'
-    ]
+
+    def start_requests(self):
+        db = Database()
+        urls = [topic['url'] for topic in db.get_topics()]
+        db.close()
+        # urls = [
+        #     'http://polycount.com/discussion/199203/shadow-of-the-tomb-raider'
+        # ]
+        for url in urls:
+            yield scrapy.Request(url=url, callback=self.parse)
 
     def parse(self, response):
         for message in response.css("div.Item-Inner"):
-            yield {
-                'text': message.css("div.Message::text").extract_first(),
-                'author': message.css("a.Username::text").extract_first(),
-                'date': message.css("time::attr(datetime)").extract_first()
-            }
+            item = ForumMessageItem()
+            item['text'] = message.css("div.Message::text").extract_first()
+            item['author'] = message.css("a.Username::text").extract_first()
+            item['date'] = message.css("time::attr(datetime)").extract_first()
+            item['topic_url'] = str(response)[5:len(str(response)) - 1]
+
+            yield item
 
         next_page_url = response.css("a.Next::attr(href)").extract_first()
         if next_page_url is not None:

@@ -5,10 +5,16 @@
 # See documentation in:
 # https://doc.scrapy.org/en/latest/topics/items.html
 
-import scrapy
+from scrapy import Field, Item
 
 
-class ForumGrabberItem(scrapy.Item):
-    # define the fields for your item here like:
-    # name = scrapy.Field()
-    pass
+class ForumTopicItem(Item):
+    name = Field()
+    url = Field()
+
+
+class ForumMessageItem(Item):
+    text = Field()
+    author = Field()
+    date = Field()
+    topic_url = Field()
