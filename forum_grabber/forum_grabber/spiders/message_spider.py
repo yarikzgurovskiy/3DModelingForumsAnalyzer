@@ -6,14 +6,16 @@ from ..items import ForumMessageItem
 
 class MessageSpider(scrapy.Spider):
     name = "messages"
+    custom_settings = {
+        'ITEM_PIPELINES': {
+            'forum_grabber.forum_grabber.pipelines.ForumGrabberPipeline': 400
+        }
+    }
 
     def start_requests(self):
         db = Database()
         urls = [topic['url'] for topic in db.get_topics()]
         db.close()
-        urls = [
-            'http://polycount.com/discussion/199176/mudbox-tessellation'
-        ]
         for url in urls:
             yield scrapy.Request(url=url, callback=self.parse)
 
