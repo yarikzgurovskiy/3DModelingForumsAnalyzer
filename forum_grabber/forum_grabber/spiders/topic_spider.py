@@ -5,6 +5,11 @@ from ..items import ForumTopicItem
 
 class TopicSpider(scrapy.Spider):
     name = "topics"
+    custom_settings = {
+        'ITEM_PIPELINES': {
+            'forum_grabber.forum_grabber.pipelines.ForumGrabberPipeline': 400
+        }
+    }
 
     def start_requests(self):
         urls = [
@@ -19,7 +24,7 @@ class TopicSpider(scrapy.Spider):
             item['name'] = str(topic.css("a.EntryLink > h3::text").extract()[1]).strip()
             item['url'] = str(topic.css("a.EntryLink::attr(href)").extract_first()).strip()
             yield item
-
-        next_page_url = response.css("a.ext::attr(href)").extract_first()
-        if next_page_url is not None:
-            yield scrapy.Request(response.urljoin(next_page_url))
+        #
+        # next_page_url = response.css("a.Next::attr(href)").extract_first()
+        # if next_page_url is not None:
+        #     yield scrapy.Request(response.urljoin(next_page_url))

@@ -6,6 +6,11 @@ from ..items import ForumMessageItem
 
 class MessageSpider(scrapy.Spider):
     name = "messages"
+    custom_settings = {
+        'ITEM_PIPELINES': {
+            'forum_grabber.forum_grabber.pipelines.ForumGrabberPipeline': 400
+        }
+    }
 
     def start_requests(self):
         db = Database()
