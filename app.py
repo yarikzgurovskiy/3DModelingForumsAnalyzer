@@ -1,5 +1,5 @@
 from flask import Flask, render_template
-from database.mongoDB import Database
+from forum_grabber.forum_grabber.database.mongoDB import Database
 
 db = Database()
 app = Flask(__name__)
@@ -12,9 +12,12 @@ def home():
 
 @app.route('/topics/<topic_id>')
 def topic(topic_id):
-    author_mess_amount = db.get_messages_counter_by_topic(topic_id)
-    max_amount = get_max_value(author_mess_amount)
-    return render_template('topic.html', author_mess_amount=author_mess_amount, max_amount=max_amount)
+    author_mess_amount = db.get_messages_counter_by_topic_id(topic_id)
+    topic_url = db.get_topic_by_id(topic_id)['url']
+    key_with_max_value = max(author_mess_amount.keys(), key=(lambda k: author_mess_amount[k]))
+    max_amount = author_mess_amount[key_with_max_value]
+    return render_template('topic.html',
+                           author_mess_amount=author_mess_amount, max_amount=max_amount, topic_url=topic_url)
 
 
 def get_max_value(dictionary: dict):

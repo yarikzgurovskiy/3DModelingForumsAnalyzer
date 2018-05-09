@@ -2,7 +2,7 @@
 <html>
 <head>
     {% block head %}
-        <title>{% block title %}{% endblock %} - Flask Super Example</title>
+        <title>{% block title %}{% endblock %} ForumsAnalyzer</title>
     {% endblock %}
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet" media="screen">
@@ -29,6 +29,12 @@
         .centralized {
             text-align: center;
         }
+
+        .update {
+            position: absolute;
+            top: 7px;
+            right: 5px;
+        }
     </style>
 </head>
 <body>
@@ -36,10 +42,13 @@
     <div class="navbar-header">
         <a class="navbar-brand" href="/">3D Modeling Forums Analyzer</a>
     </div>
+    <div class="update">
+        <a href="#" role="button" class="btn btn-default">Update data</a>
+    </div>
 </nav>
 <div class="container">
     {% block heading %}
-        <h1 class="centralized">{% block page %}{% endblock %} Themes</h1>
+        <h1 class="centralized">{% block page %}{% endblock %} Topics</h1>
     {% endblock %}
     <ul class="list-group">
         {% for topic in topics %}

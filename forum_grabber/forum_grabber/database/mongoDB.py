@@ -33,7 +33,6 @@ class Database:
     def get_messages_counter_by_topic_id(self, topic_id: str) -> dict:
         topic = self.get_topic_by_id(topic_id)
         messages = list(self.__messages_coll.find({"topic_url": topic["url"]}))
-        print(messages)
         author_mess_amount = dict.fromkeys([message["author"] for message in messages], 0)
         for message in messages:
             author_mess_amount[message["author"]] += 1

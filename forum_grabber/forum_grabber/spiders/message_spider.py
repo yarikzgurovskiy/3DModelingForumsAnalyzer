@@ -11,9 +11,6 @@ class MessageSpider(scrapy.Spider):
         db = Database()
         urls = [topic['url'] for topic in db.get_topics()]
         db.close()
-        urls = [
-            'http://polycount.com/discussion/199176/mudbox-tessellation'
-        ]
         for url in urls:
             yield scrapy.Request(url=url, callback=self.parse)
 
