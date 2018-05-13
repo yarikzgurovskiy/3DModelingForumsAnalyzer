@@ -11,6 +11,9 @@ class Database:
         if to_clear:
             self.clear_database()
 
+    def __del__(self):
+        self.close()
+
     def select_database(self, database: str):
         self.__db = self.__client[database]
         self.__messages_coll = self.__db.messages
