@@ -22,7 +22,8 @@ class MessageSpider(scrapy.Spider):
     def parse(self, response):
         for message in response.css("div.Item-Inner"):
             item = ForumMessageItem()
-            item['text'] = str(message.css("div.Message::text").extract_first()).strip()
+            text = str(message.css("div.Message::text").extract_first()).strip()
+            item['text'] = "" if text == "None" else text
             item['author'] = message.css("a.Username::text").extract_first()
             item['date'] = message.css("time::attr(datetime)").extract_first()
             item['topic_url'] = str(response)[5:len(str(response)) - 1]
