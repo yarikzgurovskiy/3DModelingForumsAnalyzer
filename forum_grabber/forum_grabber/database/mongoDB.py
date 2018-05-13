@@ -17,7 +17,7 @@ class Database:
         self.__topics_coll = self.__db.topics
 
     def save_message(self, message: dict):
-        if self.__messages_coll.find_one(message) is None:
+        if len(message["text"]) > 0 and self.__messages_coll.find_one(message) is None:
             self.__messages_coll.save(message)
 
     def save_topic(self, topic: dict):
