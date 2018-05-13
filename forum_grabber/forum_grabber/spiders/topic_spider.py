@@ -7,7 +7,7 @@ class TopicSpider(scrapy.Spider):
     name = "topics"
     custom_settings = {
         'ITEM_PIPELINES': {
-            'forum_grabber.forum_grabber.pipelines.ForumGrabberPipeline': 400
+            'forum_grabber.pipelines.ForumGrabberPipeline': 400
         }
     }
 
